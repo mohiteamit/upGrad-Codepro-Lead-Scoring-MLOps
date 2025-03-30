@@ -36,11 +36,13 @@ conda update -n base -c defaults conda -->
 # By ChatGPT research 
 
 # Using one-liner conda install
-conda create -y -n mlops python=3.10
+conda create --name mlops python=3.9
 conda activate mlops
-conda config --env --add channels conda-forge
-conda config --env --set channel_priority strict
-conda install -y pycaret=3.3.2 mlflow=2.21.2 ydata-profiling=4.16.1 airflow=2.10.5 jupyterlab=3.6.5 ipykernel ipywidgets
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+conda install ydata-profiling=4.16.0 pycaret=3.0.2 mlflow=2.5.0 airflow=2.5.0 scikit-learn=0.24.2
+python -m ipykernel install --user --name=mlops
+conda env export --name mlops > mlops_env.yml
 
 
-conda install -y pycaret=3.3.2 mlflow=2.21.2 airflow=2.10.5 jupyterlab=3.6.5 ipykernel ipywidgets
+conda env create -f mlops_env.yml

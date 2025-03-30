@@ -1,0 +1,9 @@
+name: mlops-pipeline
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - apache-airflow==2.7.3
+      - mlflow==2.11.3  # Optional: for triggering or querying MLflow

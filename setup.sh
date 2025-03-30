@@ -50,22 +50,20 @@ create_env() {
 }
 
 # Environment 1: EDA + Profiling (ydata-profiling via pip)
-# create_env "mlops-eda" "pandas matplotlib seaborn jupyter" "ydata-profiling"
+create_env "mlops-eda" "pandas matplotlib seaborn jupyter" "ydata-profiling"
+ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-eda ~/miniconda/envs/mlops-eda
 
 # Environment 2: Model Experimentation
-create_env "mlops-experiment" "databricks-cli==0.17.3 numpy==1.21.4 pandas==1.3.3 pycaret=2.3.10 mlflow=1.30.0 jupyter" ""
+create_env "mlops-experiment" "scipy=1.7.3 numpy=1.21.4 pandas=1.3.3 pycaret=2.3.10 mlflow=1.30.0 pydantic=1.10.8 jupyter" "databricks-cli==0.17.3 pandas-profiling==3.1.0 jinja2<3.1"
+ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-experiment ~/miniconda/envs/mlops-experiment
 
 # Environment 3: Pipelines (Training + Inference, Airflow via pip)
-# create_env "mlops-pipeline" "mlflow=1.30.0 pandas scikit-learn=1.0.2" "apache-airflow==2.5.3"
+create_env "mlops-pipeline" "mlflow=1.30.0 pandas scikit-learn=1.0.2" "apache-airflow==2.5.3"
+ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-pipeline ~/miniconda/envs/mlops-pipeline
 
 # Environment 4: Unit Testing
-# create_env "mlops-test" "pandas=1.5.3 scikit-learn=0.23.2 pytest" ""
-
-echo "Adding symlink for env."
-ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-eda ~/miniconda3/envs/mlops-eda
-ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-experiment ~/miniconda3/envs/mlops-experiment
-ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-pipeline ~/miniconda3/envs/mlops-pipeline
-ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-test ~/miniconda3/envs/mlops-test
+create_env "mlops-test" "pandas=1.5.3 scikit-learn=0.23.2 pytest" ""
+ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-test ~/miniconda/envs/mlops-test
 
 echo "All environments created successfully under $ENV_BASE."
 

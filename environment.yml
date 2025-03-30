@@ -1,0 +1,16 @@
+name: mlops
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pycaret=3.3.2        # Low-code ML library (includes MLflow integration)
+  - mlflow=2.21.2        # Experiment tracking (if not pulled in by PyCaret)
+  - ydata-profiling=4.16.1  # Pandas profiling for EDA
+  - airflow=2.10.5       # Apache Airflow 2.10.x
+  - jupyterlab=3.6.5     # JupyterLab interface (for VS Code notebooks)
+  - ipykernel            # Kernel for Jupyter/VS Code
+  - ipywidgets           # Widgets for interactive profiling reports
+  - pandas               # (Optional) ensure a compatible pandas version
+  - scikit-learn         # (Optional) core ML library (PyCaret will bring this)
+  - pip                  # Include pip in case additional pip-only installs are needed

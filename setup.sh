@@ -1,11 +1,18 @@
 #!/bin/bash
 
+# Check if conda is available; install Miniconda if not
+if ! command -v conda &> /dev/null; then
+  echo "Conda not found. Installing Miniconda..."
+  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+  bash miniconda.sh -b -p $HOME/miniconda
+  source "$HOME/miniconda/etc/profile.d/conda.sh"
+  conda init
+  echo "Miniconda installed. Please restart your shell or run 'source ~/.bashrc' before proceeding."
+  exit 0
+fi
+
 # Exit on error
 set -e
-
-# Update conda and metadata before doing anything
-echo "Updating Conda..."
-conda update -n base -c defaults conda -y
 
 # Base directory for all environments
 ENV_BASE="/home/upGrad-Codepro-Lead-Scoring-MLOps/venv"
@@ -18,34 +25,47 @@ create_env() {
   local env_name=$1
   local env_path="$ENV_BASE/$env_name"
   local packages=$2
+  local pip_packages=$3
 
   echo "Creating environment: $env_name"
 
   # Remove if it already exists
   if conda info --envs | grep -q "$env_path"; then
     echo "Removing existing environment: $env_path"
-    conda remove --name "$env_name" --all -y
+    conda remove --prefix "$env_path" --all -y
   fi
 
-  # Create environment
-  conda create --prefix "$env_path" -y python=3.8.10 $packages
+  # Create environment using conda-forge for broader package availability
+  conda create -y -c conda-forge --prefix "$env_path" python=3.8.10 $packages
 
-  # Activate and install Jupyter kernel for notebook access (if Jupyter installed)
+  # Activate pip-based installs (for packages not on conda)
+  if [[ ! -z "$pip_packages" ]]; then
+    "$env_path/bin/pip" install --no-cache-dir $pip_packages
+  fi
+
+  # Register Jupyter kernel if Jupyter is in conda packages
   if [[ "$packages" == *"jupyter"* ]]; then
     "$env_path/bin/python" -m ipykernel install --user --name "$env_name" --display-name "$env_name"
   fi
 }
 
-# Environment 1: EDA + Profiling
-create_env "mlops-eda" "pandas ydata-profiling matplotlib seaborn jupyter"
+# Environment 1: EDA + Profiling (ydata-profiling via pip)
+# create_env "mlops-eda" "pandas matplotlib seaborn jupyter" "ydata-profiling"
 
 # Environment 2: Model Experimentation
-create_env "mlops-experiment" "pycaret=2.3.10 mlflow=1.30.0 scikit-learn=1.0.2 jupyter"
+create_env "mlops-experiment" "databricks-cli==0.17.3 numpy==1.21.4 pandas==1.3.3 pycaret=2.3.10 mlflow=1.30.0 jupyter" ""
 
-# Environment 3: Pipelines (Training + Inference)
-create_env "mlops-pipeline" "apache-airflow=2.5.3 mlflow=1.30.0 pandas scikit-learn=1.0.2"
+# Environment 3: Pipelines (Training + Inference, Airflow via pip)
+# create_env "mlops-pipeline" "mlflow=1.30.0 pandas scikit-learn=1.0.2" "apache-airflow==2.5.3"
 
 # Environment 4: Unit Testing
-create_env "mlops-test" "pytest pandas scikit-learn=1.0.2"
+# create_env "mlops-test" "pandas=1.5.3 scikit-learn=0.23.2 pytest" ""
+
+echo "Adding symlink for env."
+ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-eda ~/miniconda3/envs/mlops-eda
+ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-experiment ~/miniconda3/envs/mlops-experiment
+ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-pipeline ~/miniconda3/envs/mlops-pipeline
+ln -sf /home/upGrad-Codepro-Lead-Scoring-MLOps/venv/mlops-test ~/miniconda3/envs/mlops-test
 
 echo "All environments created successfully under $ENV_BASE."
+

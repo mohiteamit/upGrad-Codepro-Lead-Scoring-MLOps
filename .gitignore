@@ -1,8 +1,10 @@
 #
+condaenv*requirements.txt
 Miniconda*.sh
 miniconda.sh
 system.txt
 mlruns/*
+mlartifacts/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

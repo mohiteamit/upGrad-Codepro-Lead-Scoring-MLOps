@@ -14,4 +14,9 @@ conda create --name mlops-pipeline python=3.10
 conda activate mlops-pipeline
 pip install apache-airflow[password]==2.7.3 --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.7.3/constraints-3.10.txt"
 
+
+conda deactivate
+conda env create -f mlops-eda/environment.yml
+python -m ipykernel install --user --name=mlops-eda
+
 -----

@@ -10,8 +10,8 @@ dependencies:
   - xgboost
   - jupyterlab
   - ipykernel
+  - optuna-integration
   - pip
   - pip:
       - pycaret==3.3.2
       - mlflow==2.11.3
-      - optuna==3.6.1

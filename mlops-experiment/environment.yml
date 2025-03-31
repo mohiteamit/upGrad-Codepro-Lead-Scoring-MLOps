@@ -8,10 +8,11 @@ dependencies:
   - scikit-learn
   - lightgbm
   - xgboost
+  - optuna
   - jupyterlab
   - ipykernel
-  - optuna-integration
+  - pycaret=3.3.2
+  - mlflow=2.11.3
   - pip
   - pip:
-      - pycaret==3.3.2
-      - mlflow==2.11.3
+      - optuna-integration[sklearn]

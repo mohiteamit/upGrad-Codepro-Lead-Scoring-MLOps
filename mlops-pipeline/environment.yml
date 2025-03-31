@@ -5,5 +5,5 @@ dependencies:
   - python=3.10
   - pip
   - pip:
-      - apache-airflow==2.7.3
-      - mlflow==2.11.3  # Optional: for triggering or querying MLflow
+      - apache-airflow[password]==2.7.3
+      - -c https://raw.githubusercontent.com/apache/airflow/constraints-2.7.3/constraints-3.10.txt

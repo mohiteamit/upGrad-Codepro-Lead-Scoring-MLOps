@@ -6,6 +6,7 @@ miniconda.sh
 system.txt
 mlruns/*
 mlartifacts/*
+notebooks/mlruns/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

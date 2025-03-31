@@ -9,7 +9,7 @@ bash Miniconda3-latest-Linux-x86_64.sh
 # Use constrain for airflow 
 
 conda deactivate
-conda remove --name mlops-pipeline --all
+conda remove --name mlops-experiment --all
 conda create --name mlops-pipeline python=3.10
 conda activate mlops-pipeline
 pip install apache-airflow[password]==2.7.3 --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.7.3/constraints-3.10.txt"

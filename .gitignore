@@ -1,4 +1,6 @@
 #
+airflow.db
+logs/*
 LightGBM/*
 condaenv*requirements.txt
 Miniconda*.sh

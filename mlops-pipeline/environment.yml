@@ -3,4 +3,15 @@ channels:
   - conda-forge
 dependencies:
   - python=3.10
-  - airflow=2.10.5
+  - apache-airflow=2.10.5
+  - apache-airflow-providers-common-sql
+  - apache-airflow-providers-cncf-kubernetes
+  - flask
+  - flask-login
+  - flask-wtf
+  - sqlalchemy
+  - alembic
+  - jinja2
+  - pendulum
+  - pandas
+  - graphviz
